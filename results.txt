@@ -1,0 +1,44 @@
+IT 405 LABORATORY ACTIVITY 1 TEST RESULTS 
+Python Version: 3.15.0 (tags/v3.15.0:d220409, Oct  9 2026, 11:55:56) [MSC v.1951 64 bit (AMD64)]
+
+STEP 4: TRUTH TABLES 
+[my_not]
+my_not(True) = False
+my_not(False) = True
+
+[my_and]
+my_and(True, True) = True
+my_and(True, False) = False
+my_and(False, True) = False
+my_and(False, False) = False
+
+[my_or]
+my_or(True, True) = True
+my_or(True, False) = True
+my_or(False, True) = True
+my_or(False, False) = False
+
+[my_implies]
+my_implies(True, True) = True
+my_implies(True, False) = False
+my_implies(False, True) = True
+my_implies(False, False) = True
+
+STEP 6: EVALUATOR TESTS 
+Test 1: ('not', True) => False
+Test 2: ('and', True, ('not', False)) => True
+Test 3: ('or', False, ('not', True)) => False
+Test 4: ('implies', True, False) => False
+Test 5: ('implies', ('and', True, True), ('or', False, True)) => True
+Test 6 [EXPR from parameter file]: ('not', ('implies', ('and', True, False), ('or', True, False))) => False
+
+--- STEP 7: ERROR BEHAVIOR ---
+Exact error caught during Step 7:
+Traceback (most recent call last):
+  File "C:\Users\Jenelyn Wales\Downloads\2310115-2\run_all.py", line 63, in <module>
+    bad_expr = ("or", True, ("and", 1/0, False))
+                                    
+ZeroDivisionError: division by zero
+
+EXPLANATION NOTE (3-5 Sentences) 
+Step 7 failed because Python eagerly evaluates all sub-expressions when creating data structures like tuples before any function call is made. The arithmetic expression 1/0 immediately raises a ZeroDivisionError before evaluate() even receives the tuple. In contrast, Python's native 'or' operator uses short-circuiting: when the left operand evaluates to True, it does not evaluate the right operand at all. Because our custom evaluator operates on an already constructed tuple rather than an unevaluated expression tree, it cannot bypass errors in operands.
